@@ -102,4 +102,12 @@ public class TestBase {
     protected void gotoAddContact() {
       wd.findElement(By.linkText("add new")).click();
     }
+
+    protected void clickDelete() {
+      wd.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
+    }
+
+    protected void selectGroup() {
+      wd.findElement(By.name("selected[]")).click();
+    }
 }
