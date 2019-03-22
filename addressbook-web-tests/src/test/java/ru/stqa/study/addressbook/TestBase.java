@@ -86,4 +86,20 @@ public class TestBase {
         return false;
       }
     }
+
+    protected void submitNewContact() {
+      wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+    }
+
+    protected void createNewContact(ContactAdd contactAdd) {
+      wd.findElement(By.name("firstname")).sendKeys(contactAdd.getFirstname());
+      wd.findElement(By.name("middlename")).sendKeys(contactAdd.getMiddlename());
+      wd.findElement(By.name("lastname")).sendKeys(contactAdd.getLastname());
+      wd.findElement(By.name("nickname")).sendKeys(contactAdd.getNickname());
+      wd.findElement(By.name("email")).sendKeys(contactAdd.getEmail());
+    }
+
+    protected void gotoAddContact() {
+      wd.findElement(By.linkText("add new")).click();
+    }
 }
