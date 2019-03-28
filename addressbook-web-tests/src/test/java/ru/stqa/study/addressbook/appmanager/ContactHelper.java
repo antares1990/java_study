@@ -4,40 +4,28 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.study.addressbook.model.ContactAdd;
 
-public class ContactHelper {
-    private WebDriver wd;
+public class ContactHelper extends HelperBase{
 
     public ContactHelper(WebDriver wd)  {
-        this.wd = wd;
+        super(wd);
     }
 
     public void submitNewContact() {
-      wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+      click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
     public void createNewContact(ContactAdd contactAdd) {
-        wd.findElement(By.name("firstname")).click();
-        wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys(contactAdd.getFirstname());
-        wd.findElement(By.name("middlename")).click();
-        wd.findElement(By.name("middlename")).clear();
-        wd.findElement(By.name("middlename")).sendKeys(contactAdd.getMiddlename());
-        wd.findElement(By.name("lastname")).click();
-        wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys(contactAdd.getLastname());
-        wd.findElement(By.name("nickname")).click();
-        wd.findElement(By.name("nickname")).clear();
-        wd.findElement(By.name("nickname")).sendKeys(contactAdd.getNickname());
-        wd.findElement(By.name("email")).click();
-        wd.findElement(By.name("email")).clear();
-        wd.findElement(By.name("email")).sendKeys(contactAdd.getEmail());
+        type(By.name("firstname"), contactAdd.getFirstname());
+        type(By.name("lastname"), contactAdd.getLastname());
+        type(By.name("nickname"), contactAdd.getNickname());
+        type(By.name("email"), contactAdd.getEmail());
     }
 
     public void clickDeleteContact() {
-      wd.findElement(By.xpath("//*[@id=\"content\"]/form[2]/div[2]/input")).click();
+      click(By.xpath("//*[@id=\"content\"]/form[2]/div[2]/input"));
     }
 
     public void clickContactID() {
-      wd.findElement(By.name("selected[]")).click();
+      click(By.name("selected[]"));
     }
 }
