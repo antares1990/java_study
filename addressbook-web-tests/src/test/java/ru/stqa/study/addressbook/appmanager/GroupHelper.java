@@ -37,4 +37,12 @@ public class GroupHelper extends HelperBase {
     public void selectGroup() {
         click(By.name("selected[]"));
     }
+
+    public  void clickEdit() {
+        click(By.xpath("(//input[@name='edit'])[2]"));
+    }
+
+    public  void clickUpdate() {
+        click(By.name("update"));
+    }
 }

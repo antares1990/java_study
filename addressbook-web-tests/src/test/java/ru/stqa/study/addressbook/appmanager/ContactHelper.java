@@ -28,4 +28,12 @@ public class ContactHelper extends HelperBase{
     public void clickContactID() {
       click(By.name("selected[]"));
     }
+
+    public void clickEditContact() {
+        click(By.xpath("//*[@alt='Edit']"));
+    }
+
+    public void clickUpdateContact() {
+        click(By.xpath("//input[@name='update']"));
+    }
 }
