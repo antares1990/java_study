@@ -13,6 +13,6 @@ public class ModifyContact extends TestBase{
         app.getContactHelper().clickEditContact();
         app.getContactHelper().createNewContact(new ContactAdd("newtest", "newtest", "newtest", "newtest", "newtest@test.ru"));
         app.getContactHelper().clickUpdateContact();
-        
+
     }
 }
