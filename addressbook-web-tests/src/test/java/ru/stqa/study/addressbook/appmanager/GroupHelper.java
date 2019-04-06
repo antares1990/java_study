@@ -1,6 +1,5 @@
 package ru.stqa.study.addressbook.appmanager;
 
-import com.sun.javafx.binding.ExpressionHelperBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.study.addressbook.model.GroupDate;
@@ -45,4 +44,16 @@ public class GroupHelper extends HelperBase {
     public  void clickUpdate() {
         click(By.name("update"));
     }
+
+    public void CreateGroup(GroupDate group) {
+        initGroupCreation();
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    public boolean isThereAGroup() {
+        return isElementPresent(By.name("selector[]"));
+    }
+
 }

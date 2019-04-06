@@ -6,6 +6,7 @@ public class ContactAdd {
     private final String lastname;
     private final String nickname;
     private final String email;
+    private String groups;
 
     public ContactAdd(String firstname, String middlename, String lastname, String nickname, String email) {
         this.firstname = firstname;
@@ -13,6 +14,7 @@ public class ContactAdd {
         this.lastname = lastname;
         this.nickname = nickname;
         this.email = email;
+        this.groups = groups;
     }
 
     public String getFirstname() {
@@ -33,5 +35,9 @@ public class ContactAdd {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getGroups() {
+        return groups;
     }
 }

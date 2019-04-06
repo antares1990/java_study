@@ -7,7 +7,7 @@ public class CreateNewContact extends TestBase {
 
   @Test
   public void testCreateNewContact() throws Exception {
-    app.getNavigationHelper().gotoAddContact();
+    app.getContactHelper().gotoAddContact();
     app.getContactHelper().createNewContact(new ContactAdd("test", "test", "test", "test", "test@test.ru"));
     app.getContactHelper().submitNewContact();
   }

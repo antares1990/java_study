@@ -25,13 +25,14 @@ public class HelperBase {
                 wd.findElement(locator).sendKeys(text);
             }
         }
+
     }
 
-    public boolean isElementPresent(By by) {
+    public boolean isElementPresent(By locator) {
         try {
-            wd.findElement(by);
+            wd.findElement(locator);
             return true;
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException ex) {
             return false;
         }
     }
