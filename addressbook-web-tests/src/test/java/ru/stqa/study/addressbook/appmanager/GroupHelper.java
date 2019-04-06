@@ -37,11 +37,11 @@ public class GroupHelper extends HelperBase {
         click(By.name("selected[]"));
     }
 
-    public  void clickEdit() {
+    public void clickEdit() {
         click(By.xpath("(//input[@name='edit'])[2]"));
     }
 
-    public  void clickUpdate() {
+    public void clickUpdate() {
         click(By.name("update"));
     }
 
@@ -53,7 +53,10 @@ public class GroupHelper extends HelperBase {
     }
 
     public boolean isThereAGroup() {
-        return isElementPresent(By.name("selector[]"));
+        return isElementPresent(By.name("selected[]"));
     }
 
+    public int getGroupCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
 }

@@ -1,10 +1,9 @@
 package ru.stqa.study.addressbook.tests;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
-
-import java.util.concurrent.TimeUnit;
 
 public class ModifyContact extends TestBase{
     WebDriver wd;
@@ -13,6 +12,7 @@ public class ModifyContact extends TestBase{
     public void testContactModify() {
 
         app.getNavigationHelper().clickHome();
+        int before = app.getContactHelper().getContactCount();
         if (! app.getContactHelper().isThereAContact()) {
             app.getContactHelper().CreateContact(new ContactAdd("test", "test", "test", "test", "test@test.ru"));
         }
@@ -20,6 +20,13 @@ public class ModifyContact extends TestBase{
         app.getContactHelper().clickEditContact();
         app.getContactHelper().createNewContact(new ContactAdd("newtest", "newtest", "newtest", "newtest", "newtest@test.ru"));
         app.getContactHelper().clickUpdateContact();
+        app.getContactHelper().returnToHome();
+        int after = app.getContactHelper().getContactCount();
+        if (before == 0) {
+            Assert.assertEquals(after, before + 1);
+        } else {
+            Assert.assertEquals(after, before);
+        }
 
     }
 }
