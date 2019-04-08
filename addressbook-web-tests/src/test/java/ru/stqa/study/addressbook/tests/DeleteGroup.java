@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
 import ru.stqa.study.addressbook.model.GroupDate;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DeleteGroup extends TestBase{
@@ -13,19 +14,17 @@ public class DeleteGroup extends TestBase{
   @Test
   public void testDeleteGroup() throws Exception {
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
-    if (! app.getGroupHelper().isThereAGroup()) {
+    if (!app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().CreateGroup(new GroupDate("test1", null, null));
     }
-    app.getGroupHelper().selectGroup();
+    List<GroupDate> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().clickDelete();
     app.getGroupHelper().returnToGroupPage();
-    int after = app.getGroupHelper().getGroupCount();
-    if (before == 0) {
-      Assert.assertEquals(after, before);
-    } else {
-      Assert.assertEquals(after, before - 1);
-    }
-  }
+    List<GroupDate> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size() - 1);
 
+    before.remove(before.size() - 1);
+      Assert.assertEquals(before, after);
+  }
 }

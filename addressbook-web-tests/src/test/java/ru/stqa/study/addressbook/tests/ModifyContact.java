@@ -5,6 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
 
+import java.util.HashSet;
+import java.util.List;
+
 public class ModifyContact extends TestBase{
     WebDriver wd;
 
@@ -12,21 +15,22 @@ public class ModifyContact extends TestBase{
     public void testContactModify() {
 
         app.getNavigationHelper().clickHome();
-        int before = app.getContactHelper().getContactCount();
         if (! app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().CreateContact(new ContactAdd("test", "test", "test", "test", "test@test.ru"));
+            app.getContactHelper().CreateContact(new ContactAdd("test", "123", "test", "345", "678"));
         }
-        app.getContactHelper().clickContactID();
+        List<ContactAdd> before = app.getContactHelper().getContactList();
+        app.getContactHelper().clickContactID(before.size() - 1);
         app.getContactHelper().clickEditContact();
-        app.getContactHelper().createNewContact(new ContactAdd("newtest", "newtest", "newtest", "newtest", "newtest@test.ru"));
+        ContactAdd contact = new ContactAdd(before.get(before.size() - 1).getId(),"newtest", "middle", "test", "123", "newtest");
+        app.getContactHelper().createNewContact(contact);
         app.getContactHelper().clickUpdateContact();
         app.getContactHelper().returnToHome();
-        int after = app.getContactHelper().getContactCount();
-        if (before == 0) {
-            Assert.assertEquals(after, before + 1);
-        } else {
-            Assert.assertEquals(after, before);
-        }
+        List<ContactAdd> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size());
+
+        before.remove(before.size() - 1);
+        before.add(contact);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 
     }
 }

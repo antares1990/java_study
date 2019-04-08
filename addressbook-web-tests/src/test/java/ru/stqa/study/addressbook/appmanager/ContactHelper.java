@@ -2,9 +2,16 @@ package ru.stqa.study.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.study.addressbook.model.ContactAdd;
+import ru.stqa.study.addressbook.model.GroupDate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class ContactHelper extends HelperBase{
 
@@ -18,6 +25,7 @@ public class ContactHelper extends HelperBase{
 
     public void createNewContact(ContactAdd contactAdd) {
         type(By.name("firstname"), contactAdd.getFirstname());
+        type(By.name("middlename"), contactAdd.getFirstname());
         type(By.name("lastname"), contactAdd.getLastname());
         type(By.name("nickname"), contactAdd.getNickname());
         type(By.name("email"), contactAdd.getEmail());
@@ -30,8 +38,8 @@ public class ContactHelper extends HelperBase{
       click(By.xpath("//*[@id=\"content\"]/form[2]/div[2]/input"));
     }
 
-    public void clickContactID() {
-      click(By.name("selected[]"));
+    public void clickContactID(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void clickEditContact() {
@@ -65,5 +73,18 @@ public class ContactHelper extends HelperBase{
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactAdd> getContactList() {
+        List<ContactAdd> contacts = new ArrayList<ContactAdd>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+            String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            ContactAdd contact = new ContactAdd(id, firstname, null, lastname, null,null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
