@@ -48,6 +48,16 @@ public class ContactAdd {
         this.groups = groups;
     }
 
+    public ContactAdd(int id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.middlename = null;
+        this.lastname = lastname;
+        this.nickname = null;
+        this.email = null;
+        this.groups = groups;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

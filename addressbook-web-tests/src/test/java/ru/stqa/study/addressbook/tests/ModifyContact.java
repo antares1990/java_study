@@ -11,7 +11,7 @@ import java.util.List;
 public class ModifyContact extends TestBase{
     WebDriver wd;
 
-    @Test
+    @Test 
     public void testContactModify() {
 
         app.getNavigationHelper().clickHome();
@@ -19,8 +19,7 @@ public class ModifyContact extends TestBase{
             app.getContactHelper().CreateContact(new ContactAdd("test", "123", "test", "345", "678"));
         }
         List<ContactAdd> before = app.getContactHelper().getContactList();
-        app.getContactHelper().clickContactID(before.size() - 1);
-        app.getContactHelper().clickEditContact();
+        app.getContactHelper().clickEditContact(before.size() - 1);
         ContactAdd contact = new ContactAdd(before.get(before.size() - 1).getId(),"newtest", "middle", "test", "123", "newtest");
         app.getContactHelper().createNewContact(contact);
         app.getContactHelper().clickUpdateContact();

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class DeleteContact extends TestBase{
   WebDriver wd;
 
-  @Test
+  @Test (enabled = false)
   public void testDeleteContact() throws Exception {
     app.getNavigationHelper().clickHome();
     if (! app.getContactHelper().isThereAContact()) {

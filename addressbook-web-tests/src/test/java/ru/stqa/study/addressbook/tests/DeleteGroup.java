@@ -2,6 +2,7 @@ package ru.stqa.study.addressbook.tests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
 import ru.stqa.study.addressbook.model.GroupDate;
@@ -11,12 +12,16 @@ import java.util.concurrent.TimeUnit;
 
 public class DeleteGroup extends TestBase{
 
-  @Test
-  public void testDeleteGroup() throws Exception {
+  @BeforeMethod
+  public void ensurePreconditions() {
     app.getNavigationHelper().gotoGroupPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
+    if (! app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().CreateGroup(new GroupDate("test1", null, null));
     }
+  }
+
+  @Test
+  public void testDeleteGroup() throws Exception {
     List<GroupDate> before = app.getGroupHelper().getGroupList();
     app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().clickDelete();

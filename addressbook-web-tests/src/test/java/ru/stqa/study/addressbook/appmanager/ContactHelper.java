@@ -42,8 +42,8 @@ public class ContactHelper extends HelperBase{
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void clickEditContact() {
-        click(By.xpath("//*[@alt='Edit']"));
+    public void clickEditContact(int index) {
+        wd.findElements(By.xpath("//*[@alt='Edit']")).get(index).click();
     }
 
     public void clickUpdateContact() {
@@ -82,7 +82,7 @@ public class ContactHelper extends HelperBase{
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            ContactAdd contact = new ContactAdd(id, firstname, null, lastname, null,null);
+            ContactAdd contact = new ContactAdd(id, firstname, lastname);
             contacts.add(contact);
         }
         return contacts;
