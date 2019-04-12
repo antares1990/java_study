@@ -1,33 +1,30 @@
 package ru.stqa.study.addressbook.tests;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
-import ru.stqa.study.addressbook.model.GroupDate;
+import ru.stqa.study.addressbook.model.Contacts;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class DeleteContact extends TestBase{
   WebDriver wd;
 
-  @Test (enabled = false)
+  @Test
   public void testDeleteContact() throws Exception {
-    app.getNavigationHelper().clickHome();
-    if (! app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().CreateContact(new ContactAdd("test", "test", "test", "test", "test@test.ru"));
+    app.goTo().clickHome();
+    if (! app.contact().isThereAContact()) {
+      app.contact().CreateContact(new ContactAdd().withFirstname("test33").withMiddlename("test33").withLastname("test33").withNickname("test").withEmail("test@test.ru"));
     }
-    List<ContactAdd> before = app.getContactHelper().getContactList();
-    app.getContactHelper().clickContactID(before.size() - 1);
-    app.getContactHelper().clickDeleteContact();
-    app.AlertAccept();
-    app.getContactHelper().returnToHome();
-    List<ContactAdd> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size() - 1);
+    Contacts before = app.contact().allcontact();
+    ContactAdd delete = before.iterator().next();
+    app.contact().deleteContact(delete);
+    Contacts after = app.contact().allcontact();
+    assertThat(after.size(),equalTo(before.size() - 1));
 
-    before.remove(before.size() - 1);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(delete)));
 
   }
 

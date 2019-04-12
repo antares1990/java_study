@@ -1,12 +1,13 @@
 package ru.stqa.study.addressbook.tests;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
+import ru.stqa.study.addressbook.model.Contacts;
 
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ModifyContact extends TestBase{
     WebDriver wd;
@@ -14,22 +15,20 @@ public class ModifyContact extends TestBase{
     @Test 
     public void testContactModify() {
 
-        app.getNavigationHelper().clickHome();
-        if (! app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().CreateContact(new ContactAdd("test", "123", "test", "345", "678"));
+        app.goTo().clickHome();
+        if (! app.contact().isThereAContact()) {
+            app.contact().CreateContact(new ContactAdd().withFirstname("test33").withMiddlename("test33").withLastname("test33").withNickname("test").withEmail("test@test.ru"));
         }
-        List<ContactAdd> before = app.getContactHelper().getContactList();
-        app.getContactHelper().clickEditContact(before.size() - 1);
-        ContactAdd contact = new ContactAdd(before.get(before.size() - 1).getId(),"newtest", "middle", "test", "123", "newtest");
-        app.getContactHelper().createNewContact(contact);
-        app.getContactHelper().clickUpdateContact();
-        app.getContactHelper().returnToHome();
-        List<ContactAdd> after = app.getContactHelper().getContactList();
-        Assert.assertEquals(after.size(), before.size());
+        Contacts before = app.contact().allcontact();
+        ContactAdd modify = before.iterator().next();
+        ContactAdd contact = new ContactAdd().withId(modify.getId()).withFirstname("test33").withMiddlename("test33").withLastname("test33").withNickname("test").withEmail("test@test.ru");
+        app.contact().modifyContact(contact);
+        Contacts after = app.contact().allcontact();
+        assertEquals(after.size(), before.size());
 
-        before.remove(before.size() - 1);
-        before.add(contact);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        assertThat(after, equalTo(before.withAdded(modify).withAdded(contact)));
 
     }
+
+
 }

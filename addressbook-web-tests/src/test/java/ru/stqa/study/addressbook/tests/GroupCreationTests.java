@@ -1,41 +1,31 @@
 package ru.stqa.study.addressbook.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.GroupDate;
+import ru.stqa.study.addressbook.model.Groups;
 
-import java.util.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.*;
 
 public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() throws Exception {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupDate> before = app.getGroupHelper().getGroupList();
-    GroupDate group = new GroupDate("test1", null, null);
-    app.getGroupHelper().initGroupCreation();
-    app.getGroupHelper().fillGroupForm(group);
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
-    List<GroupDate> after = app.getGroupHelper().getGroupList();
-    Assert.assertEquals(after.size(), before.size() + 1);
+    app.goTo().groupPage();
+    Groups before = app.group().all();
+    GroupDate group = new GroupDate().withName("test2");
+    app.group().initGroupCreation();
+    app.group().fillGroupForm(group);
+    app.group().submitGroupCreation();
+    app.group().returnToGroupPage();
+    Groups after = app.group().all();
+    assertEquals(after.size(),before.size() + 1);
 
-    /*int max = 0;
-    for (GroupDate g : after) {
-      if (g.getId() > max) {
-        max = g.getId();
-      }
-    }*/
-    /*int max1 = after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();*/
 
-    /*group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
-    before.add(group);*/
-
-    before.add(group);
-    Comparator<? super GroupDate> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.withAdded(
+            group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 
 

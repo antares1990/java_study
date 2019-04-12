@@ -6,12 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.study.addressbook.model.ContactAdd;
+import ru.stqa.study.addressbook.model.Contacts;
 import ru.stqa.study.addressbook.model.GroupDate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ContactHelper extends HelperBase{
 
@@ -30,20 +28,20 @@ public class ContactHelper extends HelperBase{
         type(By.name("nickname"), contactAdd.getNickname());
         type(By.name("email"), contactAdd.getEmail());
         Object contact;
-
-
     }
 
     public void clickDeleteContact() {
       click(By.xpath("//*[@id=\"content\"]/form[2]/div[2]/input"));
     }
 
-    public void clickContactID(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+
+    public void clickContactIDbyID(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
-    public void clickEditContact(int index) {
-        wd.findElements(By.xpath("//*[@alt='Edit']")).get(index).click();
+
+    public void clickEditContactById(int id) {
+        wd.findElement(By.xpath("//*[@alt='Edit']")).click();
     }
 
     public void clickUpdateContact() {
@@ -64,7 +62,6 @@ public class ContactHelper extends HelperBase{
         submitNewContact();
         returnToHome();
 
-
     }
 
     public boolean isThereAContact() {
@@ -75,16 +72,35 @@ public class ContactHelper extends HelperBase{
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactAdd> getContactList() {
-        List<ContactAdd> contacts = new ArrayList<ContactAdd>();
+
+    public Contacts allcontact() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            ContactAdd contact = new ContactAdd(id, firstname, lastname);
-            contacts.add(contact);
+            contacts.add(new ContactAdd().withId(id).withFirstname(firstname).withLastname(lastname));
         }
         return contacts;
+    }
+
+
+    public void AlertAccept() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void deleteContact(ContactAdd contact) {
+        clickContactIDbyID(contact.getId());
+        clickDeleteContact();
+        AlertAccept();
+        returnToHome();
+    }
+
+    public void modifyContact(ContactAdd contact) {
+        clickEditContactById(contact.getId());
+        createNewContact(contact);
+        clickUpdateContact();
+        returnToHome();
     }
 }

@@ -3,13 +3,27 @@ package ru.stqa.study.addressbook.model;
 import java.util.Objects;
 
 public class ContactAdd {
-    private int id;
-    private final String firstname;
-    private final String middlename;
-    private final String lastname;
-    private final String nickname;
-    private final String email;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactAdd that = (ContactAdd) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
+    private String middlename;
+    private String lastname;
+    private String nickname;
+    private String email;
     private String groups;
+
 
     @Override
     public String toString() {
@@ -24,53 +38,42 @@ public class ContactAdd {
         return id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactAdd that = (ContactAdd) o;
-        return Objects.equals(firstname, that.firstname) &&
-                Objects.equals(lastname, that.lastname);
+
+    public ContactAdd withId(int id) {
+        this.id = id;
+        return this;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstname, lastname);
-    }
-
-    public ContactAdd(String firstname, String middlename, String lastname, String nickname, String email) {
-        this.id = Integer.MAX_VALUE;
+    public ContactAdd withFirstname(String firstname) {
         this.firstname = firstname;
+        return this;
+    }
+
+    public ContactAdd withMiddlename(String middlename) {
         this.middlename = middlename;
+        return this;
+    }
+
+    public ContactAdd withLastname(String lastname) {
         this.lastname = lastname;
+        return this;
+    }
+
+    public ContactAdd withNickname(String nickname) {
         this.nickname = nickname;
+        return this;
+    }
+
+    public ContactAdd withEmail(String email) {
         this.email = email;
-        this.groups = groups;
+        return this;
     }
 
-    public ContactAdd(int id, String firstname, String lastname) {
-        this.id = id;
-        this.firstname = firstname;
-        this.middlename = null;
-        this.lastname = lastname;
-        this.nickname = null;
-        this.email = null;
+    public ContactAdd withGroups(String groups) {
         this.groups = groups;
+        return this;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public ContactAdd(int id, String firstname, String middlename, String lastname, String nickname, String email) {
-        this.id = id;
-        this.firstname = firstname;
-        this.middlename = middlename;
-        this.lastname = lastname;
-        this.nickname = nickname;
-        this.email = email;
-        this.groups = groups;
-    }
 
     public String getFirstname() {
         return firstname;
