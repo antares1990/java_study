@@ -3,18 +3,6 @@ package ru.stqa.study.addressbook.model;
 import java.util.Objects;
 
 public class ContactAdd {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactAdd that = (ContactAdd) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     private int id = Integer.MAX_VALUE;
     private String firstname;
@@ -23,6 +11,56 @@ public class ContactAdd {
     private String nickname;
     private String email;
     private String groups;
+    private String homePhone;
+    private String mobilePhone;
+    private String workPhone;
+    private String allPhones;
+
+
+    public ContactAdd withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public String getHomePhone() { return homePhone; }
+
+    public ContactAdd withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public String getMobilePhone() { return mobilePhone; }
+
+    public ContactAdd withMobilePhone(String MobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
+    }
+
+    public String getWorkPhone() { return workPhone; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactAdd that = (ContactAdd) o;
+        return id == that.id &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
+    }
+
+    public ContactAdd withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
 
 
     @Override
