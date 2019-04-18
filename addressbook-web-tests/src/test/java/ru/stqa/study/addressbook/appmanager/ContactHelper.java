@@ -27,6 +27,7 @@ public class ContactHelper extends HelperBase{
         type(By.name("lastname"), contactAdd.getLastname());
         type(By.name("nickname"), contactAdd.getNickname());
         type(By.name("email"), contactAdd.getEmail());
+        attach(By.name("photo"), contactAdd.getPhoto());
         Object contact;
     }
 
