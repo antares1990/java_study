@@ -41,7 +41,7 @@ public class ContactHelper extends HelperBase{
 
 
     public void clickEditContactById(int id) {
-        wd.findElement(By.xpath("//*[@alt='Edit']")).click();
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void clickUpdateContact() {
@@ -60,6 +60,7 @@ public class ContactHelper extends HelperBase{
         gotoAddContact();
         createNewContact(contact);
         submitNewContact();
+        contactCash = null;
         returnToHome();
 
     }
@@ -68,21 +69,27 @@ public class ContactHelper extends HelperBase{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int getContactCount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    private Contacts contactCash = null;
+
 
     public Contacts allcontact() {
-        Contacts contacts = new Contacts();
+        if (contactCash != null) {
+            return new Contacts(contactCash);
+        }
+
+        contactCash = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            contacts.add(new ContactAdd().withId(id).withFirstname(firstname).withLastname(lastname));
+            contactCash.add(new ContactAdd().withId(id).withFirstname(firstname).withLastname(lastname));
         }
-        return contacts;
+        return new Contacts(contactCash);
     }
 
 
@@ -94,6 +101,7 @@ public class ContactHelper extends HelperBase{
         clickContactIDbyID(contact.getId());
         clickDeleteContact();
         AlertAccept();
+        contactCash = null;
         returnToHome();
     }
 
@@ -101,6 +109,7 @@ public class ContactHelper extends HelperBase{
         clickEditContactById(contact.getId());
         createNewContact(contact);
         clickUpdateContact();
+        contactCash = null;
         returnToHome();
     }
 }
