@@ -28,6 +28,12 @@ public class ContactHelper extends HelperBase{
         type(By.name("nickname"), contactAdd.getNickname());
         type(By.name("email"), contactAdd.getEmail());
         attach(By.name("photo"), contactAdd.getPhoto());
+        type(By.name("address"), contactAdd.getAddress());
+        type(By.name("home"), contactAdd.getHomePhone());
+        type(By.name("work"), contactAdd.getWorkPhone());
+        type(By.name("mobile"), contactAdd.getMobilePhone());
+        type(By.name("email2"), contactAdd.getEmail2());
+        type(By.name("email3"), contactAdd.getEmail3());
         Object contact;
     }
 
@@ -90,8 +96,10 @@ public class ContactHelper extends HelperBase{
             String lastname = cells.get(2).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String allPhones = cells.get(5).getText();
+            String address = cells.get(3).getText();
+            String allEmails = cells.get(4).getText();
             contactCash.add(new ContactAdd().withId(id).withFirstname(firstname).withLastname(lastname).
-                    withAllPhones(allPhones));
+                    withAllPhones(allPhones).withAddress(address).withAllemails(allEmails));
         }
         return new Contacts(contactCash);
     }
@@ -124,8 +132,13 @@ public class ContactHelper extends HelperBase{
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
         return new ContactAdd().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-                .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+                .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address)
+                .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
 }
