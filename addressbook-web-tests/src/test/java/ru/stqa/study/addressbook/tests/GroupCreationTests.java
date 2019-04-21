@@ -1,13 +1,16 @@
 package ru.stqa.study.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.GroupDate;
 import ru.stqa.study.addressbook.model.Groups;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,16 +18,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class GroupCreationTests extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validGroups() {
+  public Iterator<Object[]> validGroups() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[] {new GroupDate().withName("test1").withHeader("header1").withFooter("footer1")});
-    list.add(new Object[] {new GroupDate().withName("test2").withHeader("header2").withFooter("footer2")});
-    list.add(new Object[] {new GroupDate().withName("test3").withHeader("header3").withFooter("footer3")});
-    return list.iterator();
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")));
+    String xml = "";
+    String line = reader.readLine();
+    while (line != null) {
+      xml += line;
+      line = reader.readLine();
+    }
+    XStream xstream = new XStream();
+    xstream.processAnnotations(GroupDate.class);
+    List<GroupDate> groups = (List<GroupDate>) xstream.fromXML(xml);
+    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
+
+
   @Test(dataProvider = "validGroups")
-  public void testGroupCreation(GroupDate group) throws Exception {
+  public void testGroupCreation(GroupDate group) {
     app.goTo().groupPage();
     Groups before = app.group().all();
     app.group().create(group);

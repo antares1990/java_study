@@ -1,14 +1,17 @@
 package ru.stqa.study.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.study.addressbook.model.ContactAdd;
 import ru.stqa.study.addressbook.model.Contacts;
+import ru.stqa.study.addressbook.model.GroupDate;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -16,17 +19,24 @@ import static org.hamcrest.MatcherAssert.*;
 public class CreateContact extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validContacts() {
+  public Iterator<Object[]> validContacts() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[] {new ContactAdd().withFirstname("test1").withLastname("test1")});
-    list.add(new Object[] {new ContactAdd().withFirstname("test2").withLastname("test2")});
-    list.add(new Object[] {new ContactAdd().withFirstname("test3").withLastname("test3")});
-    return list.iterator();
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
+    String xml = "";
+    String line = reader.readLine();
+    while (line != null) {
+      xml += line;
+      line = reader.readLine();
+    }
+    XStream xstream = new XStream();
+    xstream.processAnnotations(ContactAdd.class);
+    List<ContactAdd> contacts = (List<ContactAdd>) xstream.fromXML(xml);
+    return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
 
   }
 
   @Test(dataProvider = "validContacts")
-  public void testCreateContact(ContactAdd contact) throws Exception {
+  public void testCreateContact(ContactAdd contact) {
     Contacts before = app.contact().allcontact();
     File photo = new File("src/test/resources/tiger.jpg");
     app.contact().CreateContact(contact);
