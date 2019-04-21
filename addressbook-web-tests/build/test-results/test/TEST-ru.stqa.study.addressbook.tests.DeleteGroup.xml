@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.stqa.study.addressbook.tests.DeleteGroup" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-04-21T16:23:01" hostname="WGD02RTI426" time="1.56">
+  <properties/>
+  <testcase name="testDeleteGroup" classname="ru.stqa.study.addressbook.tests.DeleteGroup" time="1.56"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
