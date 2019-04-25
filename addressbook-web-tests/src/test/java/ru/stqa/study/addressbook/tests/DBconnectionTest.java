@@ -26,8 +26,8 @@ public class DBconnectionTest {
                 ResultSet rs = st.executeQuery("select group_id, group_name, group_footer, group_header from group_list");
                 Groups groups = new Groups();
                 while (rs.next()) {
-                    new GroupDate().withId(rs.getInt("group_id")).withName(rs.getString("group_name"))
-                            .withFooter(rs.getString("group_footer")).withHeader(rs.getString("group_header"));
+                    groups.add(new GroupDate().withId(rs.getInt("group_id")).withName(rs.getString("group_name"))
+                            .withFooter(rs.getString("group_footer")).withHeader(rs.getString("group_header")));
                 }
                 rs.close();
                 st.close();
