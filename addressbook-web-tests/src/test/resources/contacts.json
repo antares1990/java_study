@@ -1,14 +1,26 @@
 [
   {
     "firstname": "firstname 0",
-    "lastname": "lastname 0"
+    "lastname": "lastname 0",
+    "homePhone": "12331 0",
+    "mobilePhone": "12331 0",
+    "workPhone": "12331 0",
+    "address": "121231243242 0"
   },
   {
     "firstname": "firstname 1",
-    "lastname": "lastname 1"
+    "lastname": "lastname 1",
+    "homePhone": "12331 1",
+    "mobilePhone": "12331 1",
+    "workPhone": "12331 1",
+    "address": "121231243242 1"
   },
   {
     "firstname": "firstname 2",
-    "lastname": "lastname 2"
+    "lastname": "lastname 2",
+    "homePhone": "12331 2",
+    "mobilePhone": "12331 2",
+    "workPhone": "12331 2",
+    "address": "121231243242 2"
   }
 ]

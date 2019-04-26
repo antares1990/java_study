@@ -2,7 +2,9 @@ package ru.stqa.study.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Groups extends ForwardingSet<GroupDate> {
@@ -17,7 +19,11 @@ public class Groups extends ForwardingSet<GroupDate> {
         this.delegate = new HashSet<GroupDate>();
     }
 
-        @Override
+    public Groups(Collection<GroupDate> groups) {
+            this.delegate = new HashSet<GroupDate>(groups);
+    }
+
+    @Override
         protected Set<GroupDate> delegate() {
             return delegate;
         }

@@ -31,20 +31,6 @@ public class GroupDate {
     @Type(type = "text")
     private String footer;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupDate groupDate = (GroupDate) o;
-        return id == groupDate.id &&
-                Objects.equals(name, groupDate.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
 
     public GroupDate withId(int id) {
         this.id = id;
@@ -90,4 +76,19 @@ public class GroupDate {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupDate groupDate = (GroupDate) o;
+        return id == groupDate.id &&
+                Objects.equals(name, groupDate.name) &&
+                Objects.equals(header, groupDate.header) &&
+                Objects.equals(footer, groupDate.footer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, header, footer);
+    }
 }

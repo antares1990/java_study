@@ -74,7 +74,8 @@ public class ContactAddGenerate {
         System.out.println(new File(".").getAbsolutePath());
         try (Writer writer = new FileWriter(file)) {
             for (ContactAdd contact : contacts) {
-                writer.write(String.format("%s;%s\n", contact.getFirstname(), contact.getLastname()));
+                writer.write(String.format("%s;%s\n", contact.getFirstname(), contact.getLastname(),
+                        contact.getAddress(), contact.getHomePhone(), contact.getWorkPhone(), contact.getMobilePhone()));
             }
         }
     }
@@ -83,8 +84,14 @@ public class ContactAddGenerate {
         List<ContactAdd> contacts = new ArrayList<ContactAdd>();
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactAdd().withFirstname(String.format("firstname %s", i))
-                    .withLastname(String.format("lastname %s", i)));
+                    .withLastname(String.format("lastname %s", i))
+                    .withAddress(String.format("121231243242 %s", i))
+                    .withHomePhone(String.format("12331 %s", i))
+                    .withWorkPhone(String.format("12331 %s", i))
+                    .withMobilePhone(String.format("12331 %s", i)));
         }
         return contacts;
+
+        /*-f src/test/resources/contacts.json -c 3 -d json - заполнить в конфигурации */
     }
 }

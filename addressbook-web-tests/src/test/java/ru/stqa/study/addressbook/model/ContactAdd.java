@@ -22,13 +22,13 @@ public class ContactAdd {
     @Column(name = "firstname")
     private String firstname;
     @Expose
-    @Transient
+    @Column(name = "middlename")
     private String middlename;
     @Expose
     @Column(name = "lastname")
     private String lastname;
     @Expose
-    @Transient
+    @Column(name = "nickname")
     private String nickname;
     @Expose
     @Column(name = "email")
@@ -108,6 +108,25 @@ public class ContactAdd {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactAdd that = (ContactAdd) o;
+        return id == that.id &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(homePhone, that.homePhone) &&
+                Objects.equals(mobilePhone, that.mobilePhone) &&
+                Objects.equals(workPhone, that.workPhone) &&
+                Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, homePhone, mobilePhone, workPhone, address);
+    }
+
     public File getPhoto() {
         return new File(photo);
     }
@@ -141,21 +160,6 @@ public class ContactAdd {
     }
 
     public String getWorkPhone() { return workPhone; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactAdd that = (ContactAdd) o;
-        return id == that.id &&
-                Objects.equals(firstname, that.firstname) &&
-                Objects.equals(lastname, that.lastname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
-    }
 
     public ContactAdd withWorkPhone(String workPhone) {
         this.workPhone = workPhone;

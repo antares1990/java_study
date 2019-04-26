@@ -15,14 +15,15 @@ public class DeleteContact extends TestBase{
   @Test
   public void testDeleteContact() throws Exception {
     app.goTo().clickHome();
-    if (! app.contact().isThereAContact()) {
+    if (app.db().contacts().size() == 0) {
       app.contact().CreateContact(new ContactAdd().withFirstname("test33").withMiddlename("test33").withLastname("test33").withNickname("test").withEmail("test@test.ru"));
     }
-    Contacts before = app.contact().allcontact();
+    Contacts before = app.db().contacts();
     ContactAdd delete = before.iterator().next();
     app.contact().deleteContact(delete);
+    app.goTo().clickHome();
     assertThat(app.contact().count(),equalTo(before.size() - 1));
-    Contacts after = app.contact().allcontact();
+    Contacts after = app.db().contacts();
 
     assertThat(after, equalTo(before.without(delete)));
 
