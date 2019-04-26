@@ -3,43 +3,73 @@ package ru.stqa.study.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
+@Entity
+@Table(name = "addressbook")
 @XStreamAlias("contact")
 
 public class ContactAdd {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstname;
     @Expose
+    @Transient
     private String middlename;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
     @Expose
+    @Transient
     private String nickname;
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email;
     @Expose
+    @Transient
     private String groups;
     @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
     @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
     @Expose
+    @Transient
     private String allPhones;
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
     @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
     private String email2;
     @Expose
+    @Column(name = "email3")
+    @Type(type = "text")
     private String email3;
     @Expose
+    @Transient
     private String allemails;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public ContactAdd withAllemails(String allemails) {
         this.allemails = allemails;
@@ -77,14 +107,13 @@ public class ContactAdd {
         return address;
     }
 
-    private File photo;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactAdd withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
