@@ -40,6 +40,7 @@ public class HbConnectionTest {
         List<ContactAdd> result = session.createQuery( "from ContactAdd where deprecated = '0000-00-00'" ).list();
         for ( ContactAdd contact : result ) {
             System.out.println(contact);
+            System.out.println(contact.getGroups());
         }
         session.getTransaction().commit();
         session.close();
