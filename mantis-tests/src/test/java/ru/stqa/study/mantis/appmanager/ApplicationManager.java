@@ -29,7 +29,7 @@ public class ApplicationManager {
         properties.load(new FileReader((new File(String.format("src/test/resources/%s.properties", target)))));
 
 
-        if (browser.equals(BrowserType.FIREFOX)) {
+        /*if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
@@ -37,14 +37,23 @@ public class ApplicationManager {
             wd = new InternetExplorerDriver();
         }
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        wd.get(properties.getProperty("web.baseUrl"));
+        wd.get(properties.getProperty("web.baseUrl"));*/
 
 
     }
 
 
     public void stop() {
-        wd.quit();
+        if (wd != null) {
+            wd.quit();
+        }
     }
 
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
 }

@@ -9,6 +9,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
     implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
     implementation 'org.testinfected.hamcrest-matchers:all-matchers:1.8'
+    implementation 'com.google.http-client:google-http-client-apache:2.1.1'
 
 }
 
